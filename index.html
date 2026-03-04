@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sultan Aldaajani - Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#1e40af',
+                        darkBg: '#0f172a',
+                        darkCard: '#1e293b',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Gradient text effect */
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #3b82f6, #8b5cf6);
+        }
+
+        /* Card hover subtle lift */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark .hover-lift:hover {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Float animation */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Reveal animation on scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-gray-50 text-gray-900 dark:bg-darkBg dark:text-gray-100 antialiased selection:bg-primary selection:text-white">
+
+    <!-- Navigation -->
+    <nav
+        class="fixed w-full top-0 z-50 bg-white/80 dark:bg-darkBg/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="text-2xl font-bold tracking-tighter text-gradient"><span></span></a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#about"
+                        class="text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary transition font-medium">About</a>
+                    <a href="#projects"
+                        class="text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary transition font-medium">Projects</a>
+                    <a href="#certifications"
+                        class="text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary transition font-medium">Certifications</a>
+                    <a href="#contact"
+                        class="text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary transition font-medium">Contact</a>
+
+                    <!-- Dark Mode Toggle -->
+                    <button id="theme-toggle"
+                        class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition focus:outline-none focus:ring-2 focus:ring-primary shadow-sm">
+                        <i id="theme-toggle-dark-icon"
+                            class="fas fa-moon hidden w-5 h-5 flex items-center justify-center"></i>
+                        <i id="theme-toggle-light-icon"
+                            class="fas fa-sun hidden w-5 h-5 flex items-center justify-center"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center space-x-4">
+                    <button id="theme-toggle-mobile"
+                        class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition focus:outline-none shadow-sm">
+                        <i id="theme-toggle-dark-icon-mobile"
+                            class="fas fa-moon hidden w-5 h-5 flex items-center justify-center"></i>
+                        <i id="theme-toggle-light-icon-mobile"
+                            class="fas fa-sun hidden w-5 h-5 flex items-center justify-center"></i>
+                    </button>
+                    <button id="mobile-menu-btn"
+                        class="text-gray-600 dark:text-gray-300 hover:text-primary focus:outline-none p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-white dark:bg-darkBg border-b border-gray-200 dark:border-gray-800 absolute w-full left-0 shadow-lg origin-top">
+            <div class="px-4 pt-2 pb-4 space-y-1">
+                <a href="#about"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-blue-50 dark:hover:bg-gray-800 transition-colors">About</a>
+                <a href="#projects"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-blue-50 dark:hover:bg-gray-800 transition-colors">Projects</a>
+                <a href="#certifications"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-blue-50 dark:hover:bg-gray-800 transition-colors">Certifications</a>
+                <a href="#contact"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-blue-50 dark:hover:bg-gray-800 transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="pt-28 pb-16 md:pt-36 md:pb-24 min-h-[90vh] flex items-center relative overflow-hidden">
+        <!-- Background decorative blobs -->
+        <div
+            class="absolute top-1/4 left-0 w-72 h-72 bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 dark:opacity-20 animate-blob">
+        </div>
+        <div
+            class="absolute top-1/3 right-0 w-72 h-72 bg-purple-500/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 dark:opacity-20 animate-blob animation-delay-2000">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+            <div class="flex flex-col-reverse md:flex-row items-center gap-12 md:gap-8">
+                <!-- Text Left -->
+                <div class="flex-1 text-center md:text-left reveal">
+                    <h2 class="text-sm md:text-base text-primary font-semibold tracking-wide uppercase mb-3"><span
+                            class="inline-block w-8 h-[2px] bg-primary align-middle mr-2"></span>Welcome to my portfolio
+                    </h2>
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+                        Hi, I'm <br class="hidden md:block" /> <span class="text-gradient">Sultan Aldaajani</span>.
+                    </h1>
+                    <p
+                        class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-10 font-light max-w-2xl mx-auto md:mx-0 leading-relaxed">
+                        Computer Science Student <br class="hidden md:block md:mb-1">
+                        <span class="text-lg md:text-xl text-gray-500 dark:text-gray-400">Aspiring Data Analyst & AI
+                            Engineer</span>
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
+                        <a href="#projects"
+                            class="px-8 py-3.5 rounded-full bg-primary text-white font-medium hover:bg-secondary hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-primary/40 text-center flex items-center justify-center">
+                            View My Work <i class="fas fa-arrow-right ml-2 opacity-80"></i>
+                        </a>
+                        <a href="pdfs/sultan's-cv.pdf"
+                            class="px-8 py-3.5 rounded-full bg-white dark:bg-darkCard text-gray-900 dark:text-white font-medium border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:text-primary dark:hover:text-primary hover:-translate-y-1 transition-all duration-300 shadow-sm text-center flex items-center justify-center group">
+                            <i
+                                class="fas fa-download mr-2 text-gray-500 group-hover:text-primary transition-colors"></i>
+                            Download Resume
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Photo Right -->
+                <div
+                    class="w-56 h-56 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[28rem] lg:h-[28rem] relative flex-shrink-0 animate-float reveal">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-tr from-primary to-purple-500 rounded-full blur-2xl opacity-20 dark:opacity-30">
+                    </div>
+                    <div
+                        class="w-full h-full rounded-full border-4 border-white dark:border-gray-800 shadow-2xl relative z-10 overflow-hidden transform transition duration-500 hover:scale-[1.02]">
+                        <img src="images/pic.png" alt="Profile placeholder" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Small floating badge -->
+                    <div class="absolute -bottom-4 right-4 md:right-8 bg-white dark:bg-gray-800 px-4 py-2 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 flex items-center z-20 animate-bounce"
+                        style="animation-duration: 3s;">
+                        <span class="w-3 h-3 rounded-full bg-green-500 mr-2"></span>
+                        <span class="text-sm font-semibold text-gray-800 dark:text-gray-200">Available for CO-OP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about"
+        class="py-24 bg-white dark:bg-darkCard transition-colors duration-300 border-t border-gray-100 dark:border-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">About Me</h2>
+                <div class="w-20 h-1.5 bg-gradient-to-r from-primary to-purple-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="max-w-4xl mx-auto flex flex-col md:flex-row gap-12 items-center">
+                <div class="md:w-1/2 text-lg text-gray-600 dark:text-gray-400 leading-relaxed space-y-6 reveal">
+                    <p>
+                        I am a final-year Computer Science student with a strong academic record (<strong
+                            class="text-gray-900 dark:text-white font-semibold">4.51 GPA</strong>), passionate about
+                        merging data analytics with AI and machine learning.
+                    </p>
+                    <p>
+                        I enjoy building practical web solutions and automating processes. I am currently preparing for
+                        my CO-OP and looking to contribute to innovative tech teams where I can apply my skills and
+                        continue growing as a professional.
+                    </p>
+                </div>
+
+                <div class="md:w-1/2 w-full pt-6 md:pt-0 reveal">
+                    <div
+                        class="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-8 border border-gray-100 dark:border-gray-800 shadow-sm">
+                        <h3 class="text-xl font-bold mb-6 text-gray-900 dark:text-white flex items-center">
+                            <i class="fas fa-code text-primary mr-3"></i> Technical Skills
+                        </h3>
+                        <div class="flex flex-wrap gap-3">
+                            <!-- Skills Tags -->
+                            <span
+                                class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-lg text-sm font-medium border border-gray-200 dark:border-gray-700 hover:border-primary hover:text-primary dark:hover:border-primary dark:hover:text-primary transition-all duration-300 shadow-sm cursor-default flex items-center"><i
+                                    class="fab fa-python mr-2 text-blue-500"></i> Python</span>
+                            <span
+                                class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-lg text-sm font-medium border border-gray-200 dark:border-gray-700 hover:border-primary hover:text-primary dark:hover:border-primary dark:hover:text-primary transition-all duration-300 shadow-sm cursor-default flex items-center"><i
+                                    class="fas fa-chart-line mr-2 text-green-500"></i> Data Analytics</span>
+                            <span
+                                class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-lg text-sm font-medium border border-gray-200 dark:border-gray-700 hover:border-primary hover:text-primary dark:hover:border-primary dark:hover:text-primary transition-all duration-300 shadow-sm cursor-default flex items-center"><i
+                                    class="fas fa-brain mr-2 text-purple-500"></i> Artificial Intelligence</span>
+                            <span
+                                class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-lg text-sm font-medium border border-gray-200 dark:border-gray-700 hover:border-primary hover:text-primary dark:hover:border-primary dark:hover:text-primary transition-all duration-300 shadow-sm cursor-default flex items-center"><i
+                                    class="fas fa-robot mr-2 text-indigo-500"></i> Machine Learning</span>
+                            <span
+                                class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-lg text-sm font-medium border border-gray-200 dark:border-gray-700 hover:border-primary hover:text-primary dark:hover:border-primary dark:hover:text-primary transition-all duration-300 shadow-sm cursor-default flex items-center"><i
+                                    class="fas fa-laptop-code mr-2 text-blue-400"></i> Web Development</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 bg-gray-50 dark:bg-darkBg transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Featured Projects</h2>
+                <div class="w-20 h-1.5 bg-gradient-to-r from-primary to-purple-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <!-- Project 1 -->
+                <div
+                    class="bg-white dark:bg-darkCard rounded-3xl overflow-hidden hover-lift border border-gray-100 dark:border-gray-800/80 shadow-md flex flex-col h-full group reveal">
+                    <div
+                        class="relative h-64 bg-gray-200 dark:bg-gray-800 overflow-hidden border-b border-gray-100 dark:border-gray-800">
+                        <img src="images/GRM.jpg" alt="GPA Roadmap Project"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300 flex items-end p-6">
+                        </div>
+                        <div class="absolute top-4 right-4 flex gap-2">
+                            <span
+                                class="text-xs font-semibold bg-white/90 text-gray-900 px-3 py-1.5 rounded-full shadow-sm backdrop-blur-sm">Web
+                                App</span>
+                            <span
+                                class="text-xs font-semibold bg-primary/90 text-white px-3 py-1.5 rounded-full shadow-sm backdrop-blur-sm">JS</span>
+                        </div>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <h3
+                            class="text-2xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-primary transition-colors">
+                            GPA Roadmap</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6 flex-grow leading-relaxed">
+                            A web-based tool designed to help students predict their academic performance and track
+                            their GPA goals.
+                        </p>
+                        <div class="flex flex-wrap gap-4 mt-auto pt-6">
+                            <a href="https://gpa-road-map.netlify.app/"
+                                class="flex-1 text-center py-2.5 px-4 bg-primary/10 hover:bg-primary text-primary hover:text-white dark:text-blue-400 dark:hover:text-white rounded-lg font-medium transition-colors text-sm flex items-center justify-center">
+                                <i class="fas fa-external-link-alt mr-2"></i> Live Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="bg-white dark:bg-darkCard rounded-3xl overflow-hidden hover-lift border border-gray-100 dark:border-gray-800/80 shadow-md flex flex-col h-full group reveal"
+                    style="transition-delay: 100ms;">
+                    <div
+                        class="relative h-64 bg-gray-200 dark:bg-gray-800 overflow-hidden border-b border-gray-100 dark:border-gray-800">
+                        <img src="images/ARTI.jpg" alt="Automated Course Registration System"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300 flex items-end p-6">
+                        </div>
+                        <div class="absolute top-4 right-4 flex gap-2">
+                            <span
+                                class="text-xs font-semibold bg-white/90 text-gray-900 px-3 py-1.5 rounded-full shadow-sm backdrop-blur-sm">Automation</span>
+                            <span
+                                class="text-xs font-semibold bg-blue-500/90 text-white px-3 py-1.5 rounded-full shadow-sm backdrop-blur-sm">Python</span>
+                        </div>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <h3
+                            class="text-2xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-primary transition-colors">
+                            Automated Course Registration System</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6 flex-grow leading-relaxed">
+                            A Python, Flask, and Selenium-based web service that automates the university course
+                            registration process. Reducing registration time by 90%.
+                        </p>
+                        <div class="flex flex-wrap gap-4 mt-auto pt-6">
+                            <a href="https://github.com/sultan-1st/registration-bot"
+                                class="flex-1 text-center py-2.5 px-4 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-white rounded-lg font-medium transition-colors text-sm flex items-center justify-center">
+                                <i class="fab fa-github mr-2 text-lg"></i> Source Code
+                            </a>
+                            <a href="https://github.com/sultan-1st/registration-bot/releases/tag/ARTI"
+                                class="flex-1 text-center py-2.5 px-4 bg-primary/10 hover:bg-primary text-primary hover:text-white dark:text-blue-400 dark:hover:text-white rounded-lg font-medium transition-colors text-sm flex items-center justify-center">
+                                <i class="fas fa-external-link-alt mr-2"></i> Live Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications"
+        class="py-24 bg-white dark:bg-darkCard transition-colors duration-300 border-t border-gray-100 dark:border-gray-800/50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Certifications</h2>
+                <div class="w-20 h-1.5 bg-gradient-to-r from-primary to-purple-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Cert 1 -->
+                <div
+                    class="flex items-center p-6 sm:p-8 bg-gray-50 dark:bg-gray-800/30 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300 group hover:shadow-md reveal">
+                    <div
+                        class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-900/40 dark:to-blue-800/20 text-blue-600 dark:text-blue-400 flex items-center justify-center text-3xl flex-shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-sm border border-blue-50 dark:border-blue-800/30">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <div class="ml-6 sm:ml-8 flex-grow">
+                        <h4
+                            class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
+                            Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate</h4>
+                        <div class="flex items-center mt-2 text-gray-500 dark:text-gray-400">
+                            <i class="far fa-building mr-2 text-sm"></i> <span class="text-sm font-medium">Oracle</span>
+                        </div>
+                        <div class="mt-4 sm:hidden">
+                            <a href="" target="_blank"
+                                class="inline-flex items-center px-4 py-2 bg-primary/10 hover:bg-primary text-primary hover:text-white dark:text-blue-400 dark:hover:text-white rounded-lg font-medium transition-colors text-sm">
+                                Show Credential <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="hidden sm:flex flex-col items-end gap-3">
+                        <span
+                            class="px-4 py-1.5 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 rounded-full text-xs font-bold uppercase tracking-wider">Completed</span>
+                        <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=5D31C720C2939615A8FCC8DE5D2CB7FB9C15003483379529D06CE43026020B35"
+                            target="_blank"
+                            class="inline-flex items-center px-4 py-2 bg-primary/10 hover:bg-primary text-primary hover:text-white dark:text-blue-400 dark:hover:text-white rounded-lg font-medium transition-colors text-sm">
+                            Show Credential <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Cert 2 -->
+                <div class="flex items-center p-6 sm:p-8 bg-gray-50 dark:bg-gray-800/30 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300 group hover:shadow-md reveal"
+                    style="transition-delay: 100ms;">
+                    <div
+                        class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-700/40 dark:to-gray-800/20 text-gray-600 dark:text-gray-400 flex items-center justify-center text-3xl flex-shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-sm border border-gray-100 dark:border-gray-700/50">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="ml-6 sm:ml-8 flex-grow">
+                        <h4
+                            class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
+                            Data Analytics Pathway</h4>
+                        <div class="flex items-center mt-2 text-gray-500 dark:text-gray-400">
+                            <i class="far fa-building mr-2 text-sm"></i> <span class="text-sm font-medium">Tuwaiq
+                                Academy</span>
+                        </div>
+                        <div class="mt-4 sm:hidden">
+                            <a href="#" target="_blank"
+                                class="inline-flex items-center px-4 py-2 bg-primary/10 hover:bg-primary text-primary hover:text-white dark:text-blue-400 dark:hover:text-white rounded-lg font-medium transition-colors text-sm">
+                                Show Credential <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="hidden sm:flex flex-col items-end gap-3">
+                        <span
+                            class="px-4 py-1.5 bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 rounded-full text-xs font-bold uppercase tracking-wider flex items-center"><i
+                                class="fas fa-hourglass-half mr-1.5"></i> Upcoming</span>
+                        <a href="#" target="_blank"
+                            class="inline-flex items-center px-4 py-2 bg-primary/10 hover:bg-primary text-primary hover:text-white dark:text-blue-400 dark:hover:text-white rounded-lg font-medium transition-colors text-sm">
+                            Show Credential <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Cert 3 -->
+                <div class="flex items-center p-6 sm:p-8 bg-gray-50 dark:bg-gray-800/30 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300 group hover:shadow-md reveal"
+                    style="transition-delay: 200ms;">
+                    <div
+                        class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-700/40 dark:to-gray-800/20 text-gray-600 dark:text-gray-400 flex items-center justify-center text-3xl flex-shrink-0 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-sm border border-gray-100 dark:border-gray-700/50">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <div class="ml-6 sm:ml-8 flex-grow">
+                        <h4
+                            class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
+                            IBM Data Analyst Professional Certificate</h4>
+                        <div class="flex items-center mt-2 text-gray-500 dark:text-gray-400">
+                            <i class="far fa-building mr-2 text-sm"></i> <span class="text-sm font-medium">IBM</span>
+                        </div>
+                        <div class="mt-4 sm:hidden">
+                            <a href="#" target="_blank"
+                                class="inline-flex items-center px-4 py-2 bg-primary/10 hover:bg-primary text-primary hover:text-white dark:text-blue-400 dark:hover:text-white rounded-lg font-medium transition-colors text-sm">
+                                Show Credential <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="hidden sm:flex flex-col items-end gap-3">
+                        <span
+                            class="px-4 py-1.5 bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 rounded-full text-xs font-bold uppercase tracking-wider flex items-center"><i
+                                class="fas fa-hourglass-half mr-1.5"></i> Upcoming</span>
+                        <a href="#" target="_blank"
+                            class="inline-flex items-center px-4 py-2 bg-primary/10 hover:bg-primary text-primary hover:text-white dark:text-blue-400 dark:hover:text-white rounded-lg font-medium transition-colors text-sm">
+                            Show Credential <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <footer id="contact" class="bg-gray-900 text-white relative overflow-hidden border-t-4 border-primary">
+        <!-- Abstract shapes -->
+        <div
+            class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2">
+        </div>
+        <div
+            class="absolute bottom-0 left-0 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+            <div class="text-center max-w-2xl mx-auto mb-12 reveal">
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 text-white tracking-tight">Let's Connect!</h2>
+                <p class="text-gray-400 text-lg mb-10 leading-relaxed">
+                    I'm currently seeking a CO-OP position and open to exploring exciting opportunities in Software
+                    Engineering, Data Analytics, and AI. My inbox is always open.
+                </p>
+
+                <div class="flex justify-center gap-6">
+                    <a href="https://www.linkedin.com/in/smans404/"
+                        class="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xl hover:bg-primary hover:border-primary hover:text-white hover:-translate-y-2 transition-all duration-300 shadow-lg">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://github.com/sultan-1st"
+                        class="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xl hover:bg-gray-700 hover:border-gray-600 hover:text-white hover:-translate-y-2 transition-all duration-300 shadow-lg">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="mailto:sAld2jani@gmail.com"
+                        class="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xl hover:bg-red-500 hover:border-red-500 hover:text-white hover:-translate-y-2 transition-all duration-300 shadow-lg">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div
+                class="border-t border-white/10 pt-8 mt-12 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-sm">
+                <div class="font-medium">
+                    <span class="text-primary font-bold"></span>
+                </div>
+                <p>&copy; <span id="year"></span> Sultan Aldaajani - All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#hero" class="hover:text-white transition-colors">Back to top <i
+                            class="fas fa-arrow-up ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript code -->
+    <script>
+        // Set current year in copyright
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Dark / Light Mode Toggle Logic
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        const themeToggleDarkIconMobile = document.getElementById('theme-toggle-dark-icon-mobile');
+        const themeToggleLightIconMobile = document.getElementById('theme-toggle-light-icon-mobile');
+
+        // Check current theme and set icons appropriately
+        function updateIcons() {
+            if (document.documentElement.classList.contains('dark')) {
+                themeToggleDarkIcon.classList.add('hidden');
+                themeToggleLightIcon.classList.remove('hidden');
+                themeToggleDarkIconMobile.classList.add('hidden');
+                themeToggleLightIconMobile.classList.remove('hidden');
+            } else {
+                themeToggleLightIcon.classList.add('hidden');
+                themeToggleDarkIcon.classList.remove('hidden');
+                themeToggleLightIconMobile.classList.add('hidden');
+                themeToggleDarkIconMobile.classList.remove('hidden');
+            }
+        }
+
+        // Initialize theme based on preference or localStorage
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        updateIcons();
+
+        // Toggle function
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+            updateIcons();
+        }
+
+        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+        document.getElementById('theme-toggle-mobile').addEventListener('click', toggleTheme);
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            // Animate menu icon
+            const icon = mobileMenuBtn.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            }
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+
+        // Scroll Reveal Animation Initialization
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 50;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", reveal);
+        // Trigger reveal immediately for elements in viewport
+        reveal();
+
+        // Active Navigation Link Highlighting
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll("nav .hidden.md\\:flex a, nav #mobile-menu a");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove("text-primary", "dark:text-primary");
+                if (link.getAttribute("href").includes(current) && current !== "") {
+                    link.classList.add("text-primary", "dark:text-primary");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
